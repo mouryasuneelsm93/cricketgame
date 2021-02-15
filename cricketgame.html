@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Cricket</title>
+    <style>
+        .Team {
+            margin: auto;
+            text-align: center;
+            width: 60%;
+            /* position: relative; */
+        }
+        
+        .contains {
+            position: absolute;
+            display: none;
+        }
+        
+        .btn:hover {
+            background-color: blueviolet;
+        }
+        
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1167&q=80');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+        }
+        
+        h1 {
+            color: white;
+            font-weight: bold;
+        }
+        
+        .flip-box {
+            /* position: absolute; */
+            background-color: transparent;
+            width: 50%;
+            height: 100px;
+            margin: auto;
+            /* border: 1px solid #f1f1f1; */
+            perspective: 1000px;
+            margin-top: 300px;
+        }
+        
+        .flip-box-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        /* .flip-box:hover .flip-box-inner {
+            transform: rotateX(180deg);
+        } */
+        
+        .flip-box-front,
+        .flip-box-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        
+        .flip-box-back {
+            transform: rotateX(0deg);
+        }
+        
+        .contain {
+            /* position: absolute; */
+            background-color: rgba(0, 0, 0, .5);
+            width: 100%;
+            height: 100vh;
+            padding-top: 25%;
+        }
+    </style>
+</head>
+
+<body onload="Toss()">
+    <div class="contains">
+        <div class="container text-center">
+            <div class="Team">
+            </div>
+        </div>
+        <div class="flip-box">
+            <div class="flip-box-inner">
+                <div class="flip-box-front">
+                    <img src="head.png" alt="Paris" style="width:100px;">
+                </div>
+                <div class="flip-box-back">
+
+                    <img src="tail.png" alt="Paris" style="width:100px; ">
+                </div>
+            </div>
+        </div>
+        <br>
+        <center>
+            <button type="button" class="btn btn-warning b1" onclick="Toss1()">Toss</button>
+            <button type="button" class="btn btn-warning" id="b2" style='display:none' data-toggle="modal" data-target="#myModal">Toss</button>
+            <button type="button" class="btn btn-warning" id="b3" style='display:none' data-toggle="modal" data-target="#myModal2">Toss</button>
+        </center>
+    </div>
+    <div class="contain">
+        <div class="play">
+            <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <h1>CPL</h1>
+                    <button type="button" onclick="play()" class="btn btn-warning form-control">Play</button>
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">CPL</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body text-center">
+                    <div class="t1 text-center">
+
+                    </div>
+                    <button type="button" data-toggle="modal" data-target="#myModal1" class="btn btn-primary">Bat</button>
+                    <button type="button" class="btn btn-warning">Ball</button>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="finish()">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">CPL</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body text-center">
+                    <div class="text-center">
+                        <div class="team">
+                            <h2 style="font-size:40px;color:red"> Team :</h2>
+                        </div>
+                        <div class="score">
+                            <h2 style="font-size:40px;color:red">Score : 0</h2>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary h1" onclick="play1()">Hit</button>
+                    <button type="button" class="btn btn-warning h2" style="display:none;" onclick="play2()">Hit</button>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="finish()">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">CPL</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body text-center">
+                    <div class="text-center">
+                        <h5 style="font-size:40px;color:red;font-weight: bold;">WINNER TEAM</h5>
+                        <div class="team1">
+
+                        </div>
+                        <div class="score1">
+
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary h1" onclick="finish()">Finish</button>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script>
+    var H, m = 2,
+        marg = 300;
+    var team;
+    var b = Math.floor(Math.random() * 2);
+    if (b == 0) {
+        H = "Head";
+    } else {
+        H = "Tail";
+    }
+
+    function play() {
+        document.querySelector(".contain").style.display = 'none';
+        document.querySelector(".contains").style.display = 'block';
+
+    }
+
+    function Toss() {
+        var a = Math.floor(Math.random() * 2);
+        // console.log(a);
+        if (a == 0) {
+            document.querySelector(".Team").innerHTML = `<h1>Team1 call the Toss and choose the ${H}</h1>`;
+        } else {
+            document.querySelector(".Team").innerHTML = `<h1>Team2 call the Toss and choose the ${H}</h1>`;
+        }
+    }
+
+    function Toss1() {
+        document.querySelector(".Team").style.display = 'none';
+        document.querySelector(".b1").style.display = "none";
+        setInterval(() => {
+                flip();
+            },
+            100);
+    }
+    var b = Math.floor(Math.random() * 2);
+    var ab = Math.floor(Math.random() * 2);
+
+    function flip() {
+        let tval = document.querySelector(".Team").innerText;
+        let arr = tval.split(" ");
+
+        // console.log(arr);
+        if (m % 2 == 0 && marg >= 60) {
+            // console.log(r);
+            document.querySelector(".flip-box").style.transform = 'rotateX(0deg)';
+            document.querySelector(".flip-box-inner").style.transform = 'rotateX(0deg)';
+            document.querySelector(".flip-box").style.marginTop = `${marg}px`;
+            marg -= 10;
+        } else if (m % 2 != 0 && marg >= 60) {
+            document.querySelector(".flip-box").style.transform = 'rotateX(180deg)';
+            document.querySelector(".flip-box-inner").style.transform = 'rotateX(180deg)';
+            document.querySelector(".flip-box").style.marginTop = `${marg}px`;
+            marg -= 10;
+        } else if (b == 0 && marg == 50) {
+            document.querySelector(".flip-box").style.transform = 'rotateX(180deg)';
+            document.querySelector(".flip-box-inner").style.transform = 'rotateX(180deg)';
+            if (ab == b) {
+                team = arr[0];
+                document.querySelector(".t1").innerHTML = `<h2>${team} won the toss</h2>`;
+            } else {
+                if (arr[0] == 'Team1') {
+                    team = "Team2";
+                    document.querySelector(".t1").innerHTML = `<h3>You lost</h3><h2>${team} won the toss</h2>`;
+                } else {
+                    team = "Team1";
+                    document.querySelector(".t1").innerHTML = `<h3>You lost</h3><h2>${team} won the toss</h2>`;
+                }
+            }
+            document.querySelector("#b2").click();
+            marg++;
+        } else if (b == 1 && marg == 50) {
+            document.querySelector(".flip-box").style.transform = 'rotateX(0deg)';
+            document.querySelector(".flip-box-inner").style.transform = 'rotateX(0deg)';
+            if (ab == b) {
+                team = arr[0];
+                document.querySelector(".t1").innerHTML = `<h2>${team} won the toss</h2>`;
+            } else {
+                if (arr[0] == 'Team1') {
+                    team = "Team2";
+                    document.querySelector(".t1").innerHTML = `<h3>You lost</h3><h2>${team} won the toss</h2>`;
+                } else {
+                    team = "Team1";
+                    document.querySelector(".t1").innerHTML = `<h3>You lost</h3><h2>${team} won the toss</h2>`;
+                }
+            }
+            document.getElementById("b2").click();
+            marg++;
+
+        }
+        m++;
+    }
+    var r,
+        teamscore = 0,
+        i = 0,
+        nextteamscore = 0;
+    var team2;
+
+    var cl;
+
+    function play1() {
+        document.querySelector(".h1").style.display = "none";
+        cl = setInterval(() => {
+
+            team1score();
+        }, 500);
+    }
+
+    function play2() {
+        cl = setInterval(() => {
+
+            team2score();
+        }, 500);
+
+    }
+
+    function team1score() {
+        var r = Math.floor(Math.random() * 7);
+        if (r == 5) {
+            teamscore = teamscore + 2;
+        } else if (r == 6) {
+            i++;
+        } else if (i == 2) {
+            i = 0;
+            clearInterval(cl);
+            document.querySelector(".h1").style.display = 'none';
+            document.querySelector(".h2").style.display = 'block';
+            alert(`All Team all Out Total Score of ${team} :` + teamscore);
+            alert("Now Next is going to play");
+            teamscore = 0;
+            team2 = team;
+            if (team == "Team1") {
+                team = "Team2";
+            } else if (team == "Team2") {
+                team == "Team1";
+            }
+            console.log(team);
+            document.querySelector(".h2").click();
+        } else {
+            teamscore = teamscore + r;
+        }
+        console.log(teamscore, r, i);
+        document.querySelector('.team').innerHTML = `<h3>${team}` +
+            "Score </h3>";
+        document.querySelector('.score').innerHTML = teamscore;
+
+    }
+
+    function team2score() {
+        var r = Math.floor(Math.random() * 7);
+        if (r == 5) {
+            nextteamscore = nextteamscore + 2;
+        } else if (r == 6) {
+            i++;
+        } else if (i == 2) {
+            clearInterval(cl);
+            alert(`All Team all Out Total Score of ${team} :` + nextteamscore);
+            if (teamscore > nextteamscore) {
+
+                document.querySelector('.team1').innerHTML = `<h2>${team2}</h2>`;
+                document.querySelector('.score1').innerHTML = `<h3>Score : ${teamscore}</3>`;
+            } else if (teamscore == nextteamscore) {
+                alert("Match Draw");
+                location.reload();
+            } else {
+                document.querySelector('.team1').innerHTML = `<h2>${team}</h2>`;
+                document.querySelector('.score1').innerHTML = `<h3>Score : ${nextteamscore}`;
+
+            }
+            document.getElementById("b3").click();
+
+        } else {
+
+            nextteamscore = nextteamscore + r;
+        }
+        console.log(nextteamscore, r, i);
+        document.querySelector('.team').innerHTML = `<h3>${team}` +
+            "Score </h3>";
+        document.querySelector('.score').innerHTML = nextteamscore;
+
+
+    }
+
+    function finish() {
+        location.reload();
+    }
+</script>
